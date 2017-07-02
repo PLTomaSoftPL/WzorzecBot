@@ -79,7 +79,186 @@ namespace GksKatowiceBot
                         }
 
                         MicrosoftAppCredentials.TrustServiceUrl(@"https://facebook.botframework.com", DateTime.MaxValue);
-                        if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Pilka_Nozna" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Pilka_Nozna")
+                        if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Zakupy" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Zakupy")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                               // new
+                               // {
+                               //     content_type = "text",
+                               //     title = "Nowości",
+                               //     payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                               //     //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                               //  //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                               // },
+                               // new
+                               // {
+                               //     content_type = "text",
+                               //     title = "Wydarzenia",
+                               //     payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               ////       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                               // },
+                               // new
+                               // {
+                               //     content_type = "text",
+                               //     title = "Promocje",
+                               //     payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                               // //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                               // },
+                               //                                 new
+                               // {
+                               //     content_type = "text",
+                               //     title = "Restauracje",
+                               //     payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               ////       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                               // },
+                               // new
+                               // {
+                               //     content_type = "text",
+                               //     title = "Rozrywka",
+                               //     payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                               // //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                               // },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Akcesoria",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/2,akcesoria",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Artykuły dla dzieci",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/3,artykuly_dla_dzieci",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Artykuły spożywcze",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/4,artykuly_spozywcze",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Hipermarket",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/5,hipermarket",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Moda",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/7,moda",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Multimedia RTV/AGD",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/8,multimedia_rtvagd",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Obuwie i galanteria skórzana",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/9,obuwie_i_galanteria_skorzana",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sport i rekreacja",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/11,sport_i_rekreacja",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Usługi",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/12,uslugi",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wszystko dla domu",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/15,wszystko_dla_domu",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Zdrowie i uroda",
+                                    payload = "http://www.galeriaecho.pl/pl/zakupy/13,zdrowie_i_uroda",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.List;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            //   message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupy(ref hrefList, true);
+                            message.Text = "Lista sklepów";
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci")
                         {
                             Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
                             userStruct.userName = activity.From.Name;
@@ -123,28 +302,70 @@ namespace GksKatowiceBot
                                 //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
                                 //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
                                 //},
-                                new
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                                                                                new
                                 {
                                     content_type = "text",
-                                    title = "Aktualności",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Pilka_NoznaAktualnosci",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
                                     //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
                                  //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
                                 },
                                 new
                                 {
                                     content_type = "text",
-                                    title = "Galeria",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Pilka_NoznaGaleria",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
                                //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
                                 },
                                 new
                                 {
                                     content_type = "text",
-                                    title = "Video",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Pilka_NoznaVideo",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
                                 //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
                                 },
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
                                                                    }
                             });
 
@@ -155,13 +376,1116 @@ namespace GksKatowiceBot
                             message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                             List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
 
-                            //    message.Attachments = BaseGETMethod.GetCardsAttachments(ref hrefList, true);
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsAktualnosci(ref hrefList, true);
+
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Jedzenie" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Jedzenie")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsJedzenie(ref hrefList, true);
+
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+                        else if (komenda.Contains("pl/zakupy") || activity.Text.Contains("pl/zakupy"))
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                              new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList,komenda, true);
+                      //      message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList, activity.Text, true);
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+
+                        else if (komenda.Contains("pl/promocje") || activity.Text.Contains("pl/promocje"))
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                              new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            //     message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList,komenda, true);
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsPromocjeExt(ref hrefList, activity.Text, true);
+                            if (message.Attachments == null) message.Text = "Aktualnie brak promocji w wybranym sklepie";
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+
+
+
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Nowosci" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Nowosci")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsNowosci(ref hrefList, true);
 
                             await connector.Conversations.SendToConversationAsync((Activity)message);
                         }
 
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_SPOLECZNOSCIOWE" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_SPOLECZNOSCIOWE")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsSpolecznosciowe(ref hrefList, true);
+
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Rozrywka" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Rozrywka")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsRozrywka(ref hrefList, true);
+
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Promocje" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Promocje")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsPromocje(ref hrefList, true);
+
+                            if (message.Attachments.Count == 6)
+                            {
+
+                                message.ChannelData = JObject.FromObject(new
+                                {
+                                    notification_type = "REGULAR",
+
+
+                                    buttons = new dynamic[]
+                                {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                                },
+
+                                    quick_replies = new dynamic[]
+                                       {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Więcej promocji...",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje2",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+
+                                                                       }
+                                });
+                            }
+                            else
+                            {
+
+                                message.ChannelData = JObject.FromObject(new
+                                {
+                                    notification_type = "REGULAR",
+
+
+                                    buttons = new dynamic[]
+                                {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                                },
+
+                                    quick_replies = new dynamic[]
+                                       {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                //new
+                                //{
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Aktualnosci",
+                                //    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                // //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                //},
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+
+                                                                       }
+                                });
+                            }
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+
+
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Promocje2" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Promocje2")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsPromocje2(ref hrefList, true);
+
+                            
+                                message.ChannelData = JObject.FromObject(new
+                                {
+                                    notification_type = "REGULAR",
+
+
+                                    buttons = new dynamic[]
+                                {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                                },
+
+                                    quick_replies = new dynamic[]
+                                       {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+
+                                                                       }
+                                });
+                            
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+
+                        else if (komenda == "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia" || activity.Text == "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia")
+                        {
+                            Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
+                            userStruct.userName = activity.From.Name;
+                            userStruct.userId = activity.From.Id;
+                            userStruct.botName = activity.Recipient.Name;
+                            userStruct.botId = activity.Recipient.Id;
+                            userStruct.ServiceUrl = activity.ServiceUrl;
+
+                            //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
+                            //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
+
+                            Parameters.Parameters.listaAdresow.Add(userStruct);
+                            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var userAccount = new ChannelAccount(name: activity.From.Name, id: activity.From.Id);
+                            var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
+                            connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                            var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.ChannelData = JObject.FromObject(new
+                            {
+                                notification_type = "REGULAR",
+
+
+                                buttons = new dynamic[]
+                            {
+                            new
+                        {
+                                type = "web_url",
+                                url = "https://petersfancyapparel.com/classic_white_tshirt",
+                                title = "Wyniki",
+                                webview_height_ratio = "compact"
+                            }
+                            },
+
+                                quick_replies = new dynamic[]
+                                   {
+                                //new
+                                //{oh
+                                //    content_type = "text",
+                                //    title = "Aktualności",
+                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
+                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //},
+                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+
+                                                                   }
+                            });
+
+
+                            message.From = botAccount;
+                            message.Recipient = userAccount;
+                            message.Conversation = new ConversationAccount(id: conversationId.Id);
+                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsWydarzenia(ref hrefList, true);
+
+                            await connector.Conversations.SendToConversationAsync((Activity)message);
+                        }
+
+                
                         else
-                                if (activity.Text == "USER_DEFINED_PAYLOAD")
+                             if (activity.Text == "USER_DEFINED_PAYLOAD")
                         {
                             Parameters.Parameters.userDataStruct userStruct = new Parameters.Parameters.userDataStruct();
                             userStruct.userName = activity.From.Name;
@@ -196,34 +1520,62 @@ namespace GksKatowiceBot
                                 // },
                                 quick_replies = new dynamic[]
                             {
-                                //new
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                               new
                                 //{
                                 //    content_type = "text",
-                                //    title = "Aktualności",
-                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
-                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
                                 //},
-                                new
-                                {
-                                    content_type = "text",
-                                    title = "Piłka nożna",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Pilka_Nozna",
-                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
-                            //        image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
-                                },
-                                new
-                                {
-                                    content_type = "text",
-                                    title = "Siatkówka",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Siatkowka",
-                       //             image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
-                                },                                new
-                                {
-                                    content_type = "text",
-                                    title = "Hokej",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Hokej",
-                                //       image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
-                                },
                                                            }
                             });
 
@@ -233,18 +1585,16 @@ namespace GksKatowiceBot
                             message.Conversation = new ConversationAccount(id: conversationId.Id);
                             message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                             List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
-                            message.Text = @"Cześć
-Jestem BOTem, Twoim asystentem do kontaktu ze stronami internetowymi klubu GKS Katowice. Raz dziennie powiadomię Cię o aktualnościach w poszczególnych sekcjach sportowych. Ponadto spodziewaj się powiadomień w formie komunikatów, bądź innych informacji przekazywanych przez moderatora.   
-";
+                            message.Text = @"Witaj " + userAccount.Name.Substring(0, userAccount.Name.IndexOf(' ')) + " w interaktywnym przewodniku po galerii Echo w Kielcach. Pomogę Ci w szybki sposób zaznajomić się z aktualną ofertą promocyjną naszych sklepów oraz z aktualnościami, nowościami i wydarzeniami.";
                             // message.Attachments = GetCardsAttachments(ref hrefList, true);
 
                             await connector.Conversations.SendToConversationAsync((Activity)message);
 
-                            message.Text = @"Współpraca między nami jest bardzo prosta.Wydajesz mi polecenia, a ja za Ciebie wykonuje robotę.
-Zaznacz tylko w rozwijanym menu lub skorzystaj z podpowiedzi, która sekcja cię interesuje, a ja automatycznie połączę Cię z aktualnościami z wybranej sekcji.
-";
+                            message.Text = @"Skorzystaj z podpowiedzi aby przejść dalej. Jeśli zechcesz mogę codziennie przesyłać Ci wiadomość „Co nowego w Galerii” oraz specjalne, ważne komunikaty i informacje wysyłane przez Administratora. Powodzenia :)";
+                            // message.Attachments = GetCardsAttachments(ref hrefList, true);
 
                             await connector.Conversations.SendToConversationAsync((Activity)message);
+
                         }
                         else
                                 if (activity.Text == "DEVELOPER_DEFINED_PAYLOAD_HELP")
@@ -282,34 +1632,62 @@ Zaznacz tylko w rozwijanym menu lub skorzystaj z podpowiedzi, która sekcja cię
                                 // },
                                 quick_replies = new dynamic[]
                             {
-                                //new
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
                                 //{
                                 //    content_type = "text",
-                                //    title = "Aktualności",
-                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
-                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
                                 //},
-                                new
-                                {
-                                    content_type = "text",
-                                    title = "Piłka nożna",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Pilka_Nozna",
-                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
-                            //        image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
-                                },
-                                new
-                                {
-                                    content_type = "text",
-                                    title = "Siatkówka",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Siatkowka",
-                       //             image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
-                                },                                new
-                                {
-                                    content_type = "text",
-                                    title = "Hokej",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Hokej",
-                                //       image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
-                                },
                                                            }
                             });
 
@@ -319,18 +1697,16 @@ Zaznacz tylko w rozwijanym menu lub skorzystaj z podpowiedzi, która sekcja cię
                             message.Conversation = new ConversationAccount(id: conversationId.Id);
                             message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                             List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
-                            message.Text = @"Cześć
-Jestem BOTem, Twoim asystentem do kontaktu ze stronami internetowymi klubu GKS Katowice. Raz dziennie powiadomię Cię o aktualnościach w poszczególnych sekcjach sportowych. Ponadto spodziewaj się powiadomień w formie komunikatów, bądź innych informacji przekazywanych przez moderatora.   
-";
+                            message.Text = @"Witaj "+userAccount.Name.Substring(0,userAccount.Name.IndexOf(' '))+" w interaktywnym przewodniku po galerii Echo w Kielcach. Pomogę Ci w szybki sposób zaznajomić się z aktualną ofertą promocyjną naszych sklepów oraz z aktualnościami, nowościami i wydarzeniami.";
                             // message.Attachments = GetCardsAttachments(ref hrefList, true);
 
                             await connector.Conversations.SendToConversationAsync((Activity)message);
 
-                            message.Text = @"Współpraca między nami jest bardzo prosta.Wydajesz mi polecenia, a ja za Ciebie wykonuje robotę.
-Zaznacz tylko w rozwijanym menu lub skorzystaj z podpowiedzi, która sekcja cię interesuje, a ja automatycznie połączę Cię z aktualnościami z wybranej sekcji.
-";
+                            message.Text = @"Skorzystaj z podpowiedzi aby przejść dalej. Jeśli zechcesz mogę codziennie przesyłać Ci wiadomość „Co nowego w Galerii” oraz specjalne, ważne komunikaty i informacje wysyłane przez Administratora. Powodzenia :)";
+                            // message.Attachments = GetCardsAttachments(ref hrefList, true);
 
                             await connector.Conversations.SendToConversationAsync((Activity)message);
+
                         }
 
 
@@ -370,34 +1746,62 @@ Zaznacz tylko w rozwijanym menu lub skorzystaj z podpowiedzi, która sekcja cię
                                 // },
                                 quick_replies = new dynamic[]
                             {
-                                //new
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Nowości",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Nowosci",
+                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
+                                 //   image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Wydarzenia",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Wydarzenia",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Promocje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                //                                new                                 {
+                                //    content_type = "text",
+                                //    title = "Jedzenie",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                //},
+                                //                                                               new
                                 //{
                                 //    content_type = "text",
-                                //    title = "Aktualności",
-                                //    payload = "DEFINED_PAYLOAD_FOR_PICKING_BLUE",
-                                //    image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Blue%20Ball.png"
+                                //    title = "Rozrywka",
+                                //    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
+                                ////       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
                                 //},
-                                new
-                                {
-                                    content_type = "text",
-                                    title = "Piłka nożna",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Pilka_Nozna",
-                                    //     image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
-                                   // image_url = "http://archiwum.koluszki.pl/zdjecia/naglowki_nowe/listopad%202013/pi%C5%82ka[1].png"
-                                },
-                                new
-                                {
-                                    content_type = "text",
-                                    title = "Siatkówka",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Siatkowka",
-                           //         image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
-                                },                                new
-                                {
-                                    content_type = "text",
-                                    title = "Hokej",
-                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Hokej",
-                                //       image_url = "https://cdn3.iconfinder.com/data/icons/developperss/PNG/Green%20Ball.png"
-                                },
                                                            }
                             });
 
@@ -407,7 +1811,7 @@ Zaznacz tylko w rozwijanym menu lub skorzystaj z podpowiedzi, która sekcja cię
                             message.Conversation = new ConversationAccount(id: conversationId.Id);
                             message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
                             List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
-                            message.Text = "Wybierz jedną z opcji";
+                            message.Text = "Niestety nie do końca zrozumiałem czego poszukujesz. Może skorzystasz z podpowiedzi? ";
                             // message.Attachments = BaseGETMethod.GetCardsAttachmentsGallery(ref hrefList, true);
 
                             await connector.Conversations.SendToConversationAsync((Activity)message);
