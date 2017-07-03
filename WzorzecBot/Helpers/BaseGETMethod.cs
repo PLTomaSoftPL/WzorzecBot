@@ -344,206 +344,136 @@ namespace GksKatowiceBot.Helpers
         {
             List<Attachment> list = new List<Attachment>();
 
-            string urlAddress = adress;
-            // string urlAddress = "http://www.orlenliga.pl/";
+            DataTable dt = BaseDB.dajListeSklepow(adress);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-            var listTemp2 = new List<System.Linq.IGrouping<string, string>>();
-
-            if (response.StatusCode == HttpStatusCode.OK)
+            foreach (DataRow sklep in dt.Rows)
             {
-                Stream receiveStream = response.GetResponseStream();
-                StreamReader readStream = null;
 
-                if (response.CharacterSet == null)
-                {
-                    readStream = new StreamReader(receiveStream);
-                }
-                else
-                {
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                }
-
-                string data = readStream.ReadToEnd();
-
-                HtmlDocument doc = new HtmlDocument();
-                doc.LoadHtml(data);
-
-                string matchResultDivId = "row shops-list";
-                string xpath = String.Format("//div[@class='{0}']/div", matchResultDivId);
-                var people = doc.DocumentNode.SelectNodes(xpath).Select(p => p.InnerHtml);
-                string text = "";
-                foreach (var person in people)
-                {
-                    text += person;
-                }
-
-                HtmlDocument doc2 = new HtmlDocument();
-
-
-                string value = adress.Substring(adress.LastIndexOf("/"));
-
-                doc2.LoadHtml(text);
-                hrefList = doc2.DocumentNode.SelectNodes("//a")
-                                  .Select(p => p.GetAttributeValue("href", "not found")).Where(p => p.Contains(value)).GroupBy(p => p.ToString())
-                                  .ToList();
-
-                List<string> imgList = new List<string>();
-
-                List<string> titleList = new List<string>();
-
-
-                foreach (var strona in hrefList)
-                {
-                    urlAddress = "http://galeriaecho.pl/"+strona.Key;
-                    // string urlAddress = "http://www.orlenliga.pl/";
-
-                    request = (HttpWebRequest)WebRequest.Create(urlAddress);
-                    response = (HttpWebResponse)request.GetResponse();
-
-                    listTemp2 = new List<System.Linq.IGrouping<string, string>>();
-
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        receiveStream = response.GetResponseStream();
-                        readStream = null;
-
-                        if (response.CharacterSet == null)
-                        {
-                            readStream = new StreamReader(receiveStream);
-                        }
-                        else
-                        {
-                            readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                        }
-
-                        data = readStream.ReadToEnd();
-
-                        doc = new HtmlDocument();
-                        doc.LoadHtml(data);
-
-                        matchResultDivId = "inner-container";
-                        xpath = String.Format("//div[@class='{0}']/div", matchResultDivId);
-                        people = doc.DocumentNode.SelectNodes(xpath).Select(p => p.InnerHtml);
-                        text = "";
-                        foreach (var person in people)
-                        {
-                            text += person;
-                        }
-
-                        doc2 = new HtmlDocument();
-                        
-                        doc2.LoadHtml(text);
-                        
-                        titleList.Add(doc2.DocumentNode.SelectSingleNode("//h1").InnerText);
-
-                    }
-                }
-
-                int index = 5;
-
-                DataTable dt = BaseDB.GetWiadomosci();
-
-                if (newUser == true)
-                {
-                    index = hrefList.Count;
-                    if (dt.Rows.Count == 0)
-                    {
-                        //    AddWiadomosc(hrefList);
-                    }
-                }
-
-                else
-                {
-                    if (dt.Rows.Count > 0)
-                    {
-                        List<int> deleteList = new List<int>();
-                        var listTemp = new List<System.Linq.IGrouping<string, string>>();
-                        var imageListTemp = new List<string>();
-                        var titleListTemp = new List<string>();
-
-                        for (int i = 0; i < hrefList.Count; i++)
-                        {
-                            if (dt.Rows[dt.Rows.Count - 1]["Wiadomosc1"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc2"].ToString() != hrefList[i].Key &&
-                                dt.Rows[dt.Rows.Count - 1]["Wiadomosc3"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc4"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc5"].ToString() != hrefList[i].Key
-                            )
-                            {
-                                listTemp.Add(hrefList[i]);
-                                imageListTemp.Add(imgList[i]);
-                                titleListTemp.Add(titleList[i].Replace("&quot;", ""));
-                            }
-                            listTemp2.Add(hrefList[i]);
-                        }
-                        hrefList = listTemp;
-                        index = hrefList.Count;
-                        imgList = imageListTemp;
-                        titleList = titleListTemp;
-                        //   AddWiadomosc(listTemp2);
-                    }
-                    else
-                    {
-                        index = hrefList.Count;
-                        //   AddWiadomosc(hrefList);
-                    }
-                }
-
-                for (int i = 0; i < index; i++)
-                {
-                    string link = "";
-                    if (hrefList[i].Key.Contains("http"))
-                    {
-                        link = hrefList[i].Key;
-                    }
-                    else
-                    {
-                        link = "http://galeriaecho.pl/" + hrefList[i].Key;
-                        //link = "http://www.orlenliga.pl/" + hrefList[i].Key;
-                    }
-
-                    if (link.Contains("video"))
-                    {
-                        list.Add(GetHeroCard(
-                        titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
-                        new CardAction(ActionTypes.OpenUrl, "Oglądaj video", value: link),
-                        new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
-                        );
-                    }
-                    else
-                        if (link.Contains("gallery"))
-                    {
-                        list.Add(GetHeroCard(
-                        titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
-                        new CardAction(ActionTypes.OpenUrl, "Przeglądaj galerie", value: link),
-                        new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
-                        );
-                    }
-                    else
-                    {
-                        int indexStart = link.LastIndexOf("/");
-                        int indexEnd = link.LastIndexOf(",");
-                        indexStart++;
-                        list.Add(GetHeroCard(
-                        titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: ""),
-                        new CardAction(ActionTypes.OpenUrl, "Więcej", value: link),
-                        new CardAction(ActionTypes.PostBack, "Sprawdź promocje", value: "http://www.galeriaecho.pl/pl/promocje/strony/1?s=" + link.Substring(indexStart, indexEnd - indexStart)))                        
-                        );
-                    }
-
-                    //  list.Add(new Microsoft.Bot.Connector.VideoCard(titleList[i], "", "",null)
-                }
+                int indexStart = sklep["Link"].ToString().LastIndexOf("/");
+                int indexEnd = sklep["Link"].ToString().LastIndexOf(",");
+                indexStart++;
+                list.Add(GetHeroCard(
+                sklep["Tytul"].ToString().Replace("&quot;", ""), "", "",
+                new CardImage(url: ""),
+                new CardAction(ActionTypes.OpenUrl, "Więcej", value: sklep["Link"].ToString()),
+                new CardAction(ActionTypes.PostBack, "Sprawdź promocje", value: "http://www.galeriaecho.pl/pl/promocje/strony/1?s=" + sklep["Link"].ToString().Substring(indexStart, indexEnd - indexStart)))
+                );
             }
-            if (listTemp2.Count > 0)
-            {
-                hrefList = listTemp2;
-            }
-
             return list;
 
+        }
+
+        public static void GetCardsAttachmentsZakupyExt2()
+        {
+            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+            List<Attachment> list = new List<Attachment>();
+
+            List<string> adresy = new List<string>() { "http://www.galeriaecho.pl/pl/zakupy/2,akcesoria", "http://www.galeriaecho.pl/pl/zakupy/3,artykuly_dla_dzieci","http://www.galeriaecho.pl/pl/zakupy/4,artykuly_spozywcze","http://www.galeriaecho.pl/pl/zakupy/5,hipermarket","http://www.galeriaecho.pl/pl/zakupy/6,kawiarnie_i_restauracje","http://www.galeriaecho.pl/pl/zakupy/7,moda","http://www.galeriaecho.pl/pl/zakupy/8,multimedia_rtvagd","http://www.galeriaecho.pl/pl/zakupy/9,obuwie_i_galanteria_skorzana","http://www.galeriaecho.pl/pl/zakupy/11,sport_i_rekreacja","http://www.galeriaecho.pl/pl/zakupy/12,uslugi","http://www.galeriaecho.pl/pl/zakupy/15,wszystko_dla_domu","http://www.galeriaecho.pl/pl/zakupy/13,zdrowie_i_uroda", };
+
+
+
+            foreach (var urlAddress in adresy)
+
+            {
+                // string urlAddress = "http://www.orlenliga.pl/";
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                var listTemp2 = new List<System.Linq.IGrouping<string, string>>();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
+
+                    if (response.CharacterSet == null)
+                    {
+                        readStream = new StreamReader(receiveStream);
+                    }
+                    else
+                    {
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    }
+
+                    string data = readStream.ReadToEnd();
+
+                    HtmlDocument doc = new HtmlDocument();
+                    doc.LoadHtml(data);
+
+                    string matchResultDivId = "row shops-list";
+                    string xpath = String.Format("//div[@class='{0}']/div", matchResultDivId);
+                    var people = doc.DocumentNode.SelectNodes(xpath).Select(p => p.InnerHtml);
+                    string text = "";
+                    foreach (var person in people)
+                    {
+                        text += person;
+                    }
+
+                    HtmlDocument doc2 = new HtmlDocument();
+
+                    string value = urlAddress.Substring(urlAddress.LastIndexOf("/"));
+                    doc2.LoadHtml(text);
+                    hrefList = doc2.DocumentNode.SelectNodes("//a")
+                                      .Select(p => p.GetAttributeValue("href", "not found")).Where(p => p.Contains(value)).GroupBy(p => p.ToString())
+                                      .ToList();
+
+                    List<string> imgList = new List<string>();
+
+                    List<string> titleList = new List<string>();
+
+
+                    foreach (var strona in hrefList)
+                    {
+                        var urlAddress2 = "http://galeriaecho.pl/" + strona.Key;
+                        // string urlAddress = "http://www.orlenliga.pl/";
+
+                        request = (HttpWebRequest)WebRequest.Create(urlAddress2);
+                        response = (HttpWebResponse)request.GetResponse();
+
+                        listTemp2 = new List<System.Linq.IGrouping<string, string>>();
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            receiveStream = response.GetResponseStream();
+                            readStream = null;
+
+                            if (response.CharacterSet == null)
+                            {
+                                readStream = new StreamReader(receiveStream);
+                            }
+                            else
+                            {
+                                readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                            }
+
+                            data = readStream.ReadToEnd();
+
+                            doc = new HtmlDocument();
+                            doc.LoadHtml(data);
+
+                            matchResultDivId = "inner-container";
+                            xpath = String.Format("//div[@class='{0}']/div", matchResultDivId);
+                            people = doc.DocumentNode.SelectNodes(xpath).Select(p => p.InnerHtml);
+                            text = "";
+                            foreach (var person in people)
+                            {
+                                text += person;
+                            }
+
+                            doc2 = new HtmlDocument();
+
+                            doc2.LoadHtml(text);
+
+                            BaseDB.ModyfikujListeSklepow(doc2.DocumentNode.SelectSingleNode("//h1").InnerText, "", urlAddress2, urlAddress);
+                        }
+                    }
+
+
+                    //  list.Add(new Microsoft.Bot.Connector.VideoCard(titleList[i], "", "",null)
+
+                }
+            }
         }
 
         public static IList<Attachment> GetCardsAttachmentsPromocjeExt(ref List<IGrouping<string, string>> hrefList, string adress, bool newUser = false)
@@ -1594,9 +1524,8 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         title, "", "",
-                        new CardImage(url: ""),
-                        new CardAction(ActionTypes.OpenUrl, "Więcej", value: linkStr),
-                        new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + linkStr))
+                        new CardImage(url: imgLink),
+                        new CardAction(ActionTypes.OpenUrl, "Więcej", value: linkStr), null)
                         );
                     }
 

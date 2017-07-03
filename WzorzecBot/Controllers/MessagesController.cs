@@ -610,11 +610,11 @@ namespace GksKatowiceBot
                             message.From = botAccount;
                             message.Recipient = userAccount;
                             message.Conversation = new ConversationAccount(id: conversationId.Id);
-                            message.AttachmentLayout = AttachmentLayoutTypes.Carousel;
+                            message.AttachmentLayout = AttachmentLayoutTypes.List;
                             List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
 
                             message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList,komenda, true);
-                      //      message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList, activity.Text, true);
+                           // message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList, activity.Text, true);
                             await connector.Conversations.SendToConversationAsync((Activity)message);
                         }
 

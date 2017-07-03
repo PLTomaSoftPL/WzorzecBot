@@ -8,6 +8,7 @@ using System.Timers;
 using System.Threading;
 using System.Data;
 using System.Threading.Tasks;
+using GksKatowiceBot.Helpers;
 
 namespace GksKatowiceBot
 {
@@ -19,6 +20,7 @@ namespace GksKatowiceBot
 
 
             Helpers.BaseDB.AddToLog("Wywołanie metody Application_Start");
+
 
             var aTimer = new System.Timers.Timer();
             aTimer.Interval = 3 * 60 * 1000;
@@ -36,7 +38,12 @@ namespace GksKatowiceBot
                 {
                     Task.Run(() => Controllers.ThreadClass.SendThreadMessage(dr));
                 }
+                if (DateTime.Today.DayOfWeek == DayOfWeek.Monday)
+                {
+                    BaseGETMethod.GetCardsAttachmentsZakupyExt2();
+                }
             }
+
         }
     }
 }

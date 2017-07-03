@@ -267,6 +267,66 @@ namespace GksKatowiceBot.Helpers
                 return null;
             }
         }
+
+        public static void ModyfikujListeSklepow(string tytul,string img,string link,string kategoria)
+        {
+            try
+            {
+                SqlConnection sqlConnection1 = new SqlConnection("Server=tcp:plps.database.windows.net,1433;Initial Catalog=PLPS;Persist Security Info=False;User ID=tomasoft;Password=Tomason18,;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                SqlCommand cmd = new SqlCommand();
+                SqlDataReader reader;
+
+                cmd.CommandText = "AddSklepy";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Tytul", tytul);
+                cmd.Parameters.AddWithValue("@Img", img);
+                cmd.Parameters.AddWithValue("@Link", link);
+                cmd.Parameters.AddWithValue("@Kategoria", kategoria);
+                cmd.Connection = sqlConnection1;
+
+                sqlConnection1.Open();
+                cmd.ExecuteNonQuery();
+
+                sqlConnection1.Close();
+
+            }
+            catch (Exception ex)
+            {
+                AddToLog("Blad sprawdzania uzytkownika czy admnistrator " + ex.ToString());
+            }
+        }
+
+        public static DataTable dajListeSklepow(string link)
+        {
+            try
+            {
+                SqlConnection sqlConnection1 = new SqlConnection("Server=tcp:plps.database.windows.net,1433;Initial Catalog=PLPS;Persist Security Info=False;User ID=tomasoft;Password=Tomason18,;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                SqlCommand cmd = new SqlCommand();
+                SqlDataReader reader;
+                DataTable dataTable = new DataTable();
+
+
+                sqlConnection1.Open();
+
+                cmd.CommandText = "Select * from [dbo].[SklepyEcho] where Kategoria='"+link+"'";
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = sqlConnection1;
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                // this will query your database and return the result to your datatable
+                da.Fill(dataTable);
+                sqlConnection1.Close();
+                da.Dispose();
+                return dataTable;
+            }
+            catch (Exception ex)
+            {
+                AddToLog("Błąd dodawania wiadomości: " + ex.ToString());
+                return null;
+            }
+        }
+
+
         public static void DeleteUser(string UserId)
         {
             try
