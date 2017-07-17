@@ -21,7 +21,7 @@ namespace GksKatowiceBot.Controllers
                     List<IGrouping<string, string>> hrefList2 = new List<IGrouping<string, string>>();
                     List<IGrouping<string, string>> hreflist3 = new List<IGrouping<string, string>>();
                     List<IGrouping<string, string>> hreflist4 = new List<IGrouping<string, string>>();
-                    var items = BaseGETMethod.GetCardsAttachmentsNowosci(ref hrefList);
+                    var items = BaseGETMethod.GetCardsAttachmentsAktualnosci(ref hrefList);
                     hreflist3 = hrefList;
                     var items2 = BaseGETMethod.GetCardsAttachmentsWydarzenia(ref hrefList2);
                     var items4 = BaseGETMethod.GetCardsAttachmentsPromocje(ref hreflist4);
@@ -83,6 +83,27 @@ namespace GksKatowiceBot.Controllers
                                     content_type = "text",
                                     title = "Promocje",
                                     payload = "DEVELOPER_DEFINED_PAYLOAD_Promocje",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Sklepy",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Zakupy",
+                                //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
+                                },
+                                                                                                new
+                                {
+                                    content_type = "text",
+                                    title = "Restauracje",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Jedzenie",
+                               //       image_url = "https://gim7bytom.edupage.org/global/pics/iconspro/sport/volleyball.png"
+                                },
+                                new
+                                {
+                                    content_type = "text",
+                                    title = "Rozrywka",
+                                    payload = "DEVELOPER_DEFINED_PAYLOAD_Rozrywka",
                                 //       image_url = "https://www.samo-lepky.sk/data/11/hokej5.png"
                                 },
                                                                    }

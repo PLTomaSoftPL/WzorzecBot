@@ -240,7 +240,7 @@ namespace GksKatowiceBot.Helpers
 
                 int index = 5;
 
-                DataTable dt = new DataTable();
+                DataTable dt = GetWiadomosci();
                 if (newUser == true)
                 {
                     index = hrefList.Count;
@@ -262,7 +262,7 @@ namespace GksKatowiceBot.Helpers
                         for (int i = 0; i < hrefList.Count; i++)
                         {
                             if (dt.Rows[dt.Rows.Count - 1]["Wiadomosc1"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc2"].ToString() != hrefList[i].Key &&
-                                dt.Rows[dt.Rows.Count - 1]["Wiadomosc3"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc4"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc5"].ToString() != hrefList[i].Key
+                                dt.Rows[dt.Rows.Count - 1]["Wiadomosc3"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc4"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc5"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc6"].ToString() != hrefList[i].Key
                             )
                             {
                                 listTemp.Add(hrefList[i]);
