@@ -14,6 +14,9 @@ namespace GksKatowiceBot
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        [NonSerialized]
+        static DataTable dt;
+
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -33,7 +36,7 @@ namespace GksKatowiceBot
         {
             if (DateTime.UtcNow.Hour == 14 && (DateTime.UtcNow.Minute > 0 && DateTime.UtcNow.Minute <= 3))
             {
-                DataTable dt = Helpers.BaseGETMethod.GetUser();
+                dt = Helpers.BaseGETMethod.GetUser();
                 foreach (DataRow dr in dt.Rows)
                 {
                     Task.Run(() => Controllers.ThreadClass.SendThreadMessage(dr));

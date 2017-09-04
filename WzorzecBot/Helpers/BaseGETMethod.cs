@@ -301,7 +301,7 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
+                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
                         new CardAction(ActionTypes.OpenUrl, "Oglądaj video", value: link),
                         new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
                         );
@@ -311,7 +311,7 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
+                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
                         new CardAction(ActionTypes.OpenUrl, "Przeglądaj galerie", value: link),
                         new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
                         );
@@ -320,7 +320,7 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
+                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
                         new CardAction(ActionTypes.OpenUrl, "Więcej", value: link),
                         new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
                         );
@@ -1332,7 +1332,7 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         titleList[i].Replace("&quot;", ""), titleList2[i], "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
+                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
                         new CardAction(ActionTypes.OpenUrl, "Przeglądaj galerie", value: link),
                         new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
                         );
@@ -1341,7 +1341,7 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         titleList[i].Replace("&quot;", ""), titleList2[i], "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
+                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
                         new CardAction(ActionTypes.OpenUrl, "Więcej", value: link),
                         new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
                         );

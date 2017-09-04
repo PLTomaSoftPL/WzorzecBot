@@ -56,7 +56,23 @@ namespace GksKatowiceBot.Helpers
                 SqlCommand cmd = new SqlCommand();
                 SqlDataReader reader;
 
-                cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key+ "','" + hrefList[5].Key + "')";
+                if (hrefList.Count == 3)
+                {
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + "" + "','" + "" + "','" + "" + "')";
+
+                }
+                else if(hrefList.Count==4)
+                {
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + "" + "','" + "" + "')";
+                }
+                else if (hrefList.Count == 5)
+                {
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + "" + "')";
+                }
+                else if (hrefList.Count == 6)
+                {
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "')";
+                }
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = sqlConnection1;
 

@@ -134,14 +134,13 @@ namespace GksKatowiceBot.Controllers
                         {
                             BaseDB.AddToLog("Błąd wysyłania wiadomości do: " + uzytkownik + " " + ex.ToString());
                         }
-
-
-                        BaseDB.AddWiadomosci(hrefList);
-
-                        BaseDB.AddWiadomosciWydarzenia(hrefList2);
-                        BaseDB.AddWiadomosciPromocje(hreflist4);
                     }
-                
+
+                BaseDB.AddWiadomosci(hrefList);
+
+                BaseDB.AddWiadomosciWydarzenia(hrefList2);
+                BaseDB.AddWiadomosciPromocje(hreflist4);
+
             }
             catch (Exception ex)
             {
