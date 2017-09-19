@@ -259,11 +259,15 @@ namespace GksKatowiceBot.Helpers
                         var imageListTemp = new List<string>();
                         var titleListTemp = new List<string>();
 
-                        for (int i = 0; i < hrefList.Count; i++)
+                        int ilosc = hrefList.Count;
+
+                        for (int i = 0; i < ilosc; i++)
                         {
                             if (dt.Rows[dt.Rows.Count - 1]["Wiadomosc1"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc2"].ToString() != hrefList[i].Key &&
                                 dt.Rows[dt.Rows.Count - 1]["Wiadomosc3"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc4"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc5"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc6"].ToString() != hrefList[i].Key
-                            )
+                                && dt.Rows[dt.Rows.Count - 1]["Wiadomosc7"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc8"].ToString() != hrefList[i].Key
+                                && dt.Rows[dt.Rows.Count - 1]["Wiadomosc9"].ToString() != hrefList[i].Key && dt.Rows[dt.Rows.Count - 1]["Wiadomosc10"].ToString() != hrefList[i].Key
+                                )
                             {
                                 listTemp.Add(hrefList[i]);
                                 imageListTemp.Add("http://galeriaecho.pl" + imgList[i]);
@@ -320,7 +324,7 @@ namespace GksKatowiceBot.Helpers
                     {
                         list.Add(GetHeroCard(
                         titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl" + imgList[i]),
+                        new CardImage(url: imgList[i]),
                         new CardAction(ActionTypes.OpenUrl, "Więcej", value: link),
                         new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
                         );
@@ -800,12 +804,16 @@ namespace GksKatowiceBot.Helpers
                     }
                     else
                     {
-                        list.Add(GetHeroCard(
-                        titleList[i].Replace("&quot;", ""), "", "",
-                        new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
-                        new CardAction(ActionTypes.OpenUrl, "Więcej", value: link),
-                        new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
-                        );
+                        string title = titleList[i].Replace("&quot;", "").Replace("  ", "");
+                        if (title != "")
+                        {
+                            list.Add(GetHeroCard(
+                            titleList[i].Replace("&quot;", "").Replace("  ", ""), "", "",
+                            new CardImage(url: "http://galeriaecho.pl/" + imgList[i]),
+                            new CardAction(ActionTypes.OpenUrl, "Więcej", value: link),
+                            new CardAction(ActionTypes.OpenUrl, "Udostępnij", value: "https://www.facebook.com/sharer/sharer.php?u=" + link))
+                            );
+                        }
                     }
 
                     //  list.Add(new Microsoft.Bot.Connector.VideoCard(titleList[i], "", "",null)

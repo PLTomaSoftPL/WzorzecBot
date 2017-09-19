@@ -504,6 +504,10 @@ namespace GksKatowiceBot
                             userStruct.botId = activity.Recipient.Id;
                             userStruct.ServiceUrl = activity.ServiceUrl;
 
+
+                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
+                            IMessageActivity message = Activity.CreateMessageActivity();
+                            message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList, komenda, true);
                             //       BaseDB.AddToLog("UserName: " + userStruct.userName + " User Id: " + userStruct.userId + " BOtId: " + userStruct.botId + " BotName: " + userStruct.botName + " url: " + userStruct.ServiceUrl);
                             //        BaseDB.AddUser(userStruct.userName, userStruct.userId, userStruct.botName, userStruct.botId, userStruct.ServiceUrl, 1);
 
@@ -513,7 +517,7 @@ namespace GksKatowiceBot
                             var botAccount = new ChannelAccount(name: activity.Recipient.Name, id: activity.Recipient.Id);
                             connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                             var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
-                            IMessageActivity message = Activity.CreateMessageActivity();
+
                             message.ChannelData = JObject.FromObject(new
                             {
                                 notification_type = "REGULAR",
@@ -611,9 +615,7 @@ namespace GksKatowiceBot
                             message.Recipient = userAccount;
                             message.Conversation = new ConversationAccount(id: conversationId.Id);
                             message.AttachmentLayout = AttachmentLayoutTypes.List;
-                            List<IGrouping<string, string>> hrefList = new List<IGrouping<string, string>>();
-
-                            message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList,komenda, true);
+                           
                            // message.Attachments = BaseGETMethod.GetCardsAttachmentsZakupyExt(ref hrefList, activity.Text, true);
                             await connector.Conversations.SendToConversationAsync((Activity)message);
                         }
