@@ -340,7 +340,7 @@ namespace GksKatowiceBot.Helpers
 
                 sqlConnection1.Open();
 
-                cmd.CommandText = "Select DISTINCT * from [dbo].[SklepyEcho] where Kategoria='" + link+"'";
+                cmd.CommandText = "SELECT DISTINCT Tytul,Img,Link,Kategoria from [dbo].[SklepyEcho] where Kategoria='" + link+"'";
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = sqlConnection1;
 

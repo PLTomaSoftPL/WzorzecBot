@@ -24,7 +24,7 @@ namespace GksKatowiceBot
 
             Helpers.BaseDB.AddToLog("Wywołanie metody Application_Start");
 
-
+            BaseGETMethod.GetCardsAttachmentsZakupyExt2();
             var aTimer = new System.Timers.Timer();
             aTimer.Interval = 3 * 60 * 1000;
 
