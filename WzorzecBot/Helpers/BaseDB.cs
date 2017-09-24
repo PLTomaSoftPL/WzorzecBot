@@ -58,36 +58,36 @@ namespace GksKatowiceBot.Helpers
 
                 if (hrefList.Count == 3)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
 
                 }
                 else if(hrefList.Count==4)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
                 }
                 else if (hrefList.Count == 5)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
                 }
                 else if (hrefList.Count ==6)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + "" + "','" + "" + "','" + "" + "','" + "" + "')";
                 }
                 else if (hrefList.Count == 7)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + "" + "','" + "" + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + "" + "','" + "" + "','" + "" + "')";
                 }
                 else if (hrefList.Count == 8)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + hrefList[7].Key + "','" + "" + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + hrefList[7].Key + "','" + "" + "','" + "" + "')";
                 }
                 else if (hrefList.Count == 9)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + hrefList[7].Key + "','" + hrefList[8].Key + "','" + "" + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + hrefList[7].Key + "','" + hrefList[8].Key + "','" + "" + "')";
                 }
                 else if (hrefList.Count == 10)
                 {
-                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + hrefList[7].Key + "','" + hrefList[8].Key + "','" + hrefList[9].Key + "')";
+                    cmd.CommandText = "INSERT INTO [dbo].[WiadomosciCHEchoKielce] (Nazwa,DataUtw,Wiadomosc1,Wiadomosc2,Wiadomosc3,Wiadomosc4,Wiadomosc5,Wiadomosc6,Wiadomosc7,Wiadomosc8,Wiadomosc9,Wiadomosc10) VALUES ('" + "" + "','" + DateTime.Now + "','" + hrefList[0].Key + "','" + hrefList[1].Key + "','" + hrefList[2].Key + "','" + hrefList[3].Key + "','" + hrefList[4].Key + "','" + hrefList[5].Key + "','" + hrefList[6].Key + "','" + hrefList[7].Key + "','" + hrefList[8].Key + "','" + hrefList[9].Key + "')";
                 }
                 cmd.CommandType = CommandType.Text;
                 cmd.Connection = sqlConnection1;
